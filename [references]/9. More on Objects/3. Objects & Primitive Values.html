@@ -1,0 +1,13 @@
+<p>Objects are<strong> reference values </strong>- you learned that.</p><p>It might not have been obvious yet but it's also important to recognize that, in the end, <strong>objects are of course made up of primitive values</strong>.</p><p>Here's an example:</p><pre class="prettyprint linenums">const complexPerson =&nbsp;{
+    name:&nbsp;'Max',
+    hobbies:&nbsp;['Sports', 'Cooking'],
+    address:&nbsp;{
+        street:&nbsp;'Some Street 5',
+        stateId:&nbsp;5,
+        country:&nbsp;'Germany',
+        phone:&nbsp;{
+            number:&nbsp;12 345 678 9,
+            isMobile:&nbsp;true
+        }
+    },
+};</pre><p>Event though <code>complexPerson</code> has multiple nested reference values (nested arrays and objects), you end up with primitive values if you drill into the object.</p><p><code><strong>name</strong></code> holds a string (<code>'Max'</code>) =&gt;&nbsp;<strong>Primitive value</strong></p><p><code><strong>hobbies</strong></code> holds an array (i.e. a reference value) which is full of strings (<code>'Sports'</code>, <code>'Cooking'</code>) =&gt;&nbsp;<strong>Primitive values</strong></p><p><code><strong>address</strong></code> holds an object which in turn holds a mixture of primitive values like <code>'Some Street 5'</code>&nbsp;and nested objects (<code>phone</code>), but if you dive into <code>phone</code>, you find only numbers and booleans in there =&gt;&nbsp;<strong>Primitive values</strong></p><p>So you could say:&nbsp;<strong>Primitive</strong> values are the <strong>core building blocks</strong> that hold your data, <strong>objects (and arrays)</strong> are helpful for <strong>organizing</strong> and <strong>working</strong> with that data.</p>

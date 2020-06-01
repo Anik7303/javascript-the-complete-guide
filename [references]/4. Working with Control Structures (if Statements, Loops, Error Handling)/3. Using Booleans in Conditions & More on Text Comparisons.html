@@ -1,0 +1,19 @@
+<h4>Understanding the "Condition"</h4><p>Always keep in mind that <code>condition</code> in</p><pre class="prettyprint linenums">if (condition)&nbsp;{ ... }</pre><p>simply has to be a <strong>boolean value</strong>.</p><p>Often, you'll <strong>generate</strong> such a boolean value with the help of <code>===</code>, <code>&gt;</code>, <code>&lt;</code> etc. <strong>All these operators yield boolean values</strong> (without changing the variables/&nbsp;values you're using them on).</p><p>Since <code>if</code> only wants a boolean, you of course <strong>don't have to use such an operator</strong>. If you already got a variable that holds a boolean, you can use it without any extra operator.</p><p>Example:</p><pre class="prettyprint linenums">const isLoggedIn =&nbsp;true;
+if (isLoggedIn) {
+    //&nbsp;This code will execute because isLoggedIn is true =&gt;&nbsp;A valid condition
+}</pre><p>You could write</p><pre class="prettyprint linenums">const isLoggedIn =&nbsp;true;
+if (isLoggedIn ===&nbsp;true) {
+    ...
+}</pre><p>but that would be <strong>redundant</strong>. You'd generate another new boolean where you already got one.</p><p>You can use the <code>!</code> operator to negate ("invert") the value:</p><pre class="prettyprint linenums">const isLoggedIn =&nbsp;true;
+if (!isLoggedIn) {
+    //&nbsp;This code will NOT&nbsp;execute because isLoggedIn is true but !&nbsp;inverts it (in this check)
+} else {
+    //&nbsp;This would execute because !isLoggedIn yields false =&gt;&nbsp;else block executes
+}</pre><p>Again, that would be similar to:</p><pre class="prettyprint linenums">const isLoggedIn =&nbsp;true;
+if (isLoggedIn !== true) {
+    //&nbsp;This would NOT execute
+} else {
+    //&nbsp;This would execute because isLoggedIn is true and hence !== true yields false
+}</pre><p>But again, that would be redundant.</p><h4>More on Text (String) Comparisons</h4><p>Strings can also be compared with greater than (<code>&gt;</code>) or lower/&nbsp;smaller than (<code>&lt;</code>)&nbsp;operators.</p><p>JavaScript compares strings based on standard lexicographical ordering, using Unicode values.</p><p>That means that <code>b</code> is greater than <code>a</code> for example.</p><p>JavaScript always looks at the first character and only considers other characters if the first character is similar. In addition, capital characters are considered to be smaller than lowercase characters.</p><p>See these examples:</p><pre class="prettyprint linenums">'ab'&nbsp;&gt;&nbsp;'aa' //&nbsp;true
+'a'&nbsp;&gt;&nbsp;'B' // true
+'a'&nbsp;&gt;&nbsp;'b'&nbsp;// false</pre>
