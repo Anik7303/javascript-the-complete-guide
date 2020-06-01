@@ -29,35 +29,38 @@ function writeToLog(
 function createAndWriteOutput(operator, resultBeforeCalc, calcNumber) {
     const description = `${resultBeforeCalc} ${operator} ${calcNumber}`;
     outputResult(currentResult, description);
-    writeToLog(operator, initialResult, calcNumber, currentResult);
+    writeToLog(operator, resultBeforeCalc, calcNumber, currentResult);
 }
 
 function add() {
-    const enteredNumber = getUserInput();
-    const initialResult = currentResult;
-    currentResult = currentResult + enteredNumber;
-    createAndWriteOutput('+', initialResult, enteredNumber);
+    calculateResult('+');
 }
 
 function subtract() {
-    const enteredNumber = getUserInput();
-    const initialResult = currentResult;
-    currentResult = currentResult - enteredNumber;
-    createAndWriteOutput('-', initialResult, enteredNumber);
+    calculateResult('-');
 }
 
 function multipy() {
-    const enteredNumber = getUserInput();
-    const initialResult = currentResult;
-    currentResult = currentResult * enteredNumber;
-    createAndWriteOutput('*', initialResult, enteredNumber);
+    calculateResult('*');
 }
 
 function divide() {
+    calculateResult('/');
+}
+
+function calculateResult(calculationType) {
     const enteredNumber = getUserInput();
     const initialResult = currentResult;
-    currentResult = currentResult / enteredNumber;
-    createAndWriteOutput('/', initialResult, enteredNumber);
+    if (calculationType === '+') {
+        currentResult = currentResult + enteredNumber;
+    } else if (calculationType === '-') {
+        currentResult = currentResult - enteredNumber;
+    } else if (calculationType === '*') {
+        currentResult = currentResult * enteredNumber;
+    } else {
+        currentResult = currentResult / enteredNumber;
+    }
+    createAndWriteOutput(calculationType, initialResult, enteredNumber);
 }
 
 addBtn.addEventListener('click', add);
