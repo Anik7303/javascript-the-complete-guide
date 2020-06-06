@@ -66,33 +66,43 @@ class ProductItem extends Component {
 }
 
 class ProductList extends Component {
-    products = [
-        new Product(
-            'A Pillow',
-            'https://www.serta.com/sites/ssb/serta.com/uploads/2018/accessories/pillows/Cool%20Comfy%20Queen/CoolComfy1.jpg',
-            'A soft pillow',
-            9.99
-        ),
-        new Product(
-            'A Carpet',
-            'https://cdn.britannica.com/49/74349-050-0CC8A49F/carpet-type-Herat.jpg',
-            'A carpet you might like - or not',
-            89.99
-        ),
-    ];
+    products = [];
 
     constructor(renderedHookId) {
         super(renderedHookId);
         this.render();
+        this.fetchProducts();
+    }
+
+    fetchProducts() {
+        this.products = [
+            new Product(
+                'A Pillow',
+                'https://www.serta.com/sites/ssb/serta.com/uploads/2018/accessories/pillows/Cool%20Comfy%20Queen/CoolComfy1.jpg',
+                'A soft pillow',
+                9.99
+            ),
+            new Product(
+                'A Carpet',
+                'https://cdn.britannica.com/49/74349-050-0CC8A49F/carpet-type-Herat.jpg',
+                'A carpet you might like - or not',
+                89.99
+            ),
+        ];
+        this.renderProducts();
+    }
+
+    renderProducts() {
+        for (const prod of this.products) {
+            new ProductItem('prod-list', prod);
+        }
     }
 
     render() {
         this.createRootElement('ul', 'product-list', [
             new ElementAttribute('id', 'prod-list'),
         ]);
-        for (const prod of this.products) {
-            new ProductItem('prod-list', prod);
-        }
+        this.renderProducts();
     }
 }
 
