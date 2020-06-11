@@ -22,32 +22,16 @@ const setTimer = (duration) => {
     });
 };
 
-function trackUserHandler() {
+async function trackUserHandler() {
     let positionData;
-    getPosition()
-        .then((posData) => {
-            positionData = posData;
-            return setTimer(2000);
-        })
-        .then((data) => {
-            console.log(data, positionData);
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-    // navigator.geolocation.getCurrentPosition(
-    //     (posData) => {
-    //         setTimer(2000).then((data) => {
-    //             console.log(data, posData);
-    //         });
-    //     },
-    //     (error) => {
-    //         console.log(error);
-    //     }
-    // );
-    setTimer(1000).then((data) => {
-        console.log('timer finished');
-    });
+    let timerData;
+    try {
+        positionData = await getPosition();
+        timerData = await setTimer(2000);
+    } catch (error) {
+        console.log(error);
+    }
+    console.log(timerData, positionData);
 }
 
 button.addEventListener('click', trackUserHandler);
