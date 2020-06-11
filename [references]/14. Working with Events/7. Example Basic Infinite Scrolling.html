@@ -1,0 +1,14 @@
+<p>Let's have fun with the <code>scroll</code> event and create a list which you can scroll infinitely (explanations below)!</p><p><strong>You can run this code snippet on any page</strong> - just make sure that <strong>you can scroll vertically</strong> (either by adding enough dummy content, by adding some styles that add a lot of <code>height</code> to some elements or by shrinking the browser window vertically).</p><pre class="prettyprint linenums">let curElementNumber =&nbsp;0;
+
+function scrollHandler() {
+    const distanceToBottom = document.body.getBoundingClientRect().bottom;
+
+    if (distanceToBottom &lt; document.documentElement.clientHeight + 150) {
+        const newDataElement = document.createElement('div');
+        curElementNumber++;
+        newDataElement.innerHTML&nbsp;=&nbsp;`&lt;p&gt;Element ${curElementNumber}&lt;/p&gt;`;
+        document.body.append(newDataElement);
+    }
+}
+
+window.addEventListener('scroll', scrollHandler);</pre><p><strong>So what's happening here?</strong></p><p>At the very bottom, we register the <code>scrollHandler</code> function as a handler for the <code>'scroll'</code> event on our window object.</p><p>Inside that function, we first of all <strong>measure the total distance</strong> between our viewport (top left corner of what we currently see)&nbsp;and the end of the page (<strong>not</strong> just the end of our currently visible area) =&gt;&nbsp;Stored in <code>distanceToBottom</code>.</p><p><em>For example, if our browser window has a height of </em><code><em>500px</em></code><em>, then distanceToBottom could be </em><code><em>684px</em></code><em>, assuming that we got some content we can scroll to.</em></p><p>Next, we <strong>compare the distance</strong> to the bottom of our overall content (<code>distanceToBottom</code>) <strong>to the window height + a certain threshold</strong> (in this example <code>150px</code>). <code>document.documentElement.clientHeight</code> is preferable to <code>window.innerHeight</code> because it respects potential scroll bars.</p><p>If we have <strong>less than </strong><code><strong>150px</strong></code><strong> to the end of our page content</strong>, we make it into the if-block (where we append new data).</p><p>Inside of the if-statement, we then create a new <code>&lt;div&gt;</code>&nbsp;element and populate it with a <code>&lt;p&gt;</code> element which in turn outputs an incrementing counter value.</p>

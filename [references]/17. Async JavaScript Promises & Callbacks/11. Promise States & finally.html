@@ -1,0 +1,12 @@
+<p>You learned about the different promise states:</p><ul><li><p><strong>PENDING</strong>&nbsp;=&gt;&nbsp;Promise is doing work, neither <code>then()</code> nor <code>catch()</code>&nbsp;executes at this moment</p></li><li><p><strong>RESOLVED</strong> =&gt;&nbsp;Promise is resolved =&gt;&nbsp;<code>then()</code> executes</p></li><li><p><strong>REJECTED</strong>&nbsp; =&gt;&nbsp;Promise was rejected =&gt;&nbsp;<code>catch()</code> executes</p></li></ul><p>When you have another <code>then()</code> block after a <code>catch()</code> or <code>then()</code> block, the promise re-enters <strong>PENDING</strong> mode (keep in mind:&nbsp;<code>then()</code> and <code>catch()</code> always return a new promise - either not resolving to anything or resolving to what you <code>return</code> inside of <code>then()</code>). Only if there are no more <code>then()</code> blocks left, it enters a new, final mode:&nbsp;<strong>SETTLED</strong>.</p><p>Once <strong>SETTLED</strong>, you can use a special block - <code><strong>finally()</strong></code> - to do final cleanup work. <code>finally()</code> is reached no matter if you resolved or rejected before.</p><p>Here's an example:</p><pre class="prettyprint linenums">somePromiseCreatingCode()
+    .then(firstResult =&gt;&nbsp;{
+        return 'done with first promise';
+    })
+    .catch(err =&gt;&nbsp;{
+        // would handle any errors thrown before
+        // implicitly returns a new promise - just like then()
+    })
+    .finally(()&nbsp;=&gt;&nbsp;{
+        // the promise is settled now - finally()&nbsp;will NOT&nbsp;return a new promise!
+        //&nbsp;you can do final cleanup work here
+    });</pre><p><strong>You don't have to add a </strong><code><strong>finally()</strong></code><strong> block (indeed we haven't in the lectures). </strong></p>

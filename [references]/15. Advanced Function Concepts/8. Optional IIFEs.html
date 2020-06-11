@@ -1,0 +1,11 @@
+<p>In JavaScript - especially in older scripts - you sometimes find a pattern described as "<strong>IIFEs</strong>". IIFE stands for "<strong>I</strong>mmediately <strong>I</strong>nvoked <strong>F</strong>unction <strong>E</strong>xpression" and the pattern you might find looks like this (directly in a script file):</p><pre class="prettyprint linenums">(function() {
+    var age =&nbsp;30;
+    console.log(age);&nbsp;//&nbsp;30
+})()
+
+console.log(age);&nbsp;//&nbsp;Error:&nbsp;"age is not defined"</pre><p>What's that?</p><p>We see a function expression which calls itself (please note the <code>()</code>&nbsp;right after the function).</p><p>It's NOT a function declaration because it's wrapped in <code>()</code> - that happens on purpose since you can't immediately execute function declarations.</p><p><strong>But why would you write some code?</strong></p><p>Please note that the snippet uses <code>var</code>, NOT&nbsp;<code>let</code> or <code>const</code>. Remember that <code>var</code> does <strong>NOT&nbsp;use block scope</strong> but only differ between global and function scope.</p><p>As a consequence, it was hard to control where variables were available - variables outside of function always were available globally. Well, IIFEs solve that problem since the script (or parts of it) essentially are wrapped in a function =&gt;&nbsp;Function scope is used.</p><p><strong>Nowadays, this is not really required anymore</strong>. With <code>let</code> and <code>const</code> we got block scope and if you want to restrict where variables are available (outside of functions, <code>if</code> statements, <code>for</code> loops etc - where you automatically have scoped variables since these structures create blocks), you can simply wrap the code that should have scoped variables with <code>{}</code>. </p><pre class="prettyprint linenums">{
+    const age =&nbsp;30;
+    console.log(age);&nbsp;//&nbsp;30
+}
+
+console.log(age);&nbsp;//&nbsp;Error:&nbsp;"age is not defined"</pre><p>Not something you see too often but something that is possible.</p>

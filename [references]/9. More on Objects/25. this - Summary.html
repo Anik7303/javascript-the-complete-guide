@@ -1,0 +1,36 @@
+<p>The <code>this</code> keyword can lead to some headaches in JavaScript - this summary hopefully acts as a remedy.</p><p><code>this</code> refers to different things, depending on where it's used and how (if used in a function)&nbsp;a function is called.</p><p>Generally, <code>this</code> refers to the "thing"&nbsp;which called a function (if used inside of a function). That can be the global context, an object or some bound data/ object (e.g. when the browser binds <code>this</code> to the button that triggered a click event).</p><p><strong>1)&nbsp;</strong><code><strong>this</strong></code><strong> in Global Context (i.e. outside of any function)</strong></p><pre class="prettyprint linenums">function something()&nbsp;{ ... }
+
+console.log(this); // logs global object (window in browser) - ALWAYS&nbsp;(also in strict mode)!</pre><p> <strong>2)&nbsp;</strong><code><strong>this</strong></code><strong> in a Function (non-Arrow) - Called in the global context</strong></p><pre class="prettyprint linenums">function something()&nbsp;{ 
+    console.log(this);
+}
+
+something(); // logs global object (window in browser) in non-strict mode, undefined in strict mode</pre><p><strong>3)&nbsp;</strong><code><strong>this</strong></code><strong> in an Arrow-Function - Called in the global context</strong></p><pre class="prettyprint linenums">const something =&nbsp;() =&gt;&nbsp;{ 
+    console.log(this);
+}
+
+something(); // logs global object (window in browser) - ALWAYS&nbsp;(also in strict mode)!</pre><p> <strong>4)&nbsp;</strong><code><strong>this</strong></code><strong> in a Method (non-Arrow) - Called on an object</strong></p><pre class="prettyprint linenums">const person =&nbsp;{ 
+    name:&nbsp;'Max',
+    greet:&nbsp;function()&nbsp;{ // or use method shorthand: greet() { ... }
+        console.log(this.name);
+    }
+};
+
+person.greet();&nbsp;//&nbsp;logs 'Max', "this"&nbsp;refers to the person object</pre><p> <strong>5)&nbsp;</strong><code><strong>this</strong></code><strong> in a Method (Arrow Function) - Called on an object</strong></p><pre class="prettyprint linenums">const person =&nbsp;{ 
+    name:&nbsp;'Max',
+    greet:&nbsp;() =&gt;&nbsp;{
+        console.log(this.name);
+    }
+};
+
+person.greet();&nbsp;//&nbsp;logs nothing&nbsp;(or some global name on window object), "this"&nbsp;refers to global (window) object, even in strict mode</pre><p><code>this</code> can refer to unexpected things if you call it on some other object, e.g.:</p><pre class="prettyprint linenums">const person =&nbsp;{ 
+    name:&nbsp;'Max',
+    greet()&nbsp;{
+        console.log(this.name);
+    }
+};
+
+const anotherPerson =&nbsp;{ name:&nbsp;'Manuel' }; //&nbsp;does NOT have a built-in greet method!
+
+anotherPerson.sayHi = person.greet;&nbsp;// greet is NOT called here, it's just assigned to a new property/ method on the "anotherPerson"&nbsp;object
+
+anotherPerson.sayHi(); //&nbsp;logs 'Manuel' because method is called on "anotherPerson"&nbsp;object =&gt;&nbsp;"this" refers to the "thing"&nbsp;which called it</pre><p>If in doubt, a <code>console.log(this);</code> can always help you find out what <code>this</code> is referring to at the moment!</p>

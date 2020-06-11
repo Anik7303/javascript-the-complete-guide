@@ -1,0 +1,15 @@
+<p>As a <strong>reference</strong> which you can come back to (or print out), here's a <strong>quick summary</strong> of how <strong>logical operators</strong> and <strong>comparison operators</strong> behave in JavaScript:</p><pre class="prettyprint linenums">const userName =&nbsp;'Max';
+const altName =&nbsp;'';
+console.log(userName ===&nbsp;'Max');&nbsp;// generates and prints a boolean =&gt;&nbsp;true
+console.log(userName);&nbsp;//&nbsp;wasn't touched, still is a string =&gt;&nbsp;'Max'
+
+console.log(userName || null);&nbsp;// userName is truthy and therefore returned by || =&gt;&nbsp;'Max'
+console.log(altName || 'Max'); //&nbsp;altName is falsy (empty string), hence 'Max'&nbsp;is returned =&gt;&nbsp;'Max'
+console.log(altName || '');&nbsp;// both altName and ''&nbsp;are falsy but if the first operand is falsy, the second one is always returned =&gt;&nbsp;''
+console.log(altName || null || 'Anna'); // altName and null are falsy, 'Anna'&nbsp;is returned =&gt;&nbsp;'Anna'
+
+console.log(userName &amp;&amp;&nbsp;'Anna');&nbsp;// userName is truthy, hence second (!) value is returned =&gt;&nbsp;'Anna'
+console.log(altName &amp;&amp;&nbsp;'Anna'); // altName is falsy, hence first value is returned =&gt;&nbsp;''
+console.log(userName &amp;&amp;&nbsp;''); //&nbsp;userName is truthy, hence second value is returned =&gt;&nbsp;''</pre><p><strong>Always keep in mind</strong>:&nbsp;<strong>NO</strong>&nbsp;operator (neither <code>===</code>, <code>&gt;</code> etc. nor <code>&amp;&amp;</code> or <code>||</code>) changes the variable you might be using in the comparison. In the above examples, the values stored in <code>userName</code> and <code>altName</code> <strong>are NEVER&nbsp;changed</strong>.</p><p><code>===</code>, <code>&gt;</code> etc. just <strong>generate</strong> <strong>new boolean values</strong> which are used in the comparison. <code>||</code> and <code>&amp;&amp;</code>&nbsp;<strong>generate NO&nbsp;booleans</strong>, they just treat the <strong>values</strong> <strong>before and after them as conditions</strong> (which therefore need to yield boolean values and are coerced to booleans if required).</p><p>Because of the above-described behaviors, you often use <code>||</code> in JavaScript to assign default/&nbsp;fallback values to variables/&nbsp;constants:</p><pre class="prettyprint linenums">const enteredValue =&nbsp;'';&nbsp;// let's assume this is set based on some input provided by the user, therefore it might be an empty string
+
+const userName = enteredValue || 'PLACEHOLDER';&nbsp;// will assign 'PLACEHOLDER'&nbsp;if enteredValue is an empty string</pre>

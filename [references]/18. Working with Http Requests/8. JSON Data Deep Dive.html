@@ -1,0 +1,24 @@
+<p>Typically, data is transferred as "<strong>JSON</strong>"&nbsp;data between your client-side code and your backend ("the server").</p><p>JSON&nbsp;stands for <strong>J</strong>ava<strong>S</strong>cript <strong>O</strong>bject <strong>N</strong>otation and it looks like this:</p><pre class="prettyprint linenums">{
+    "name":&nbsp;"Max",
+    "age":&nbsp;30,
+    "hobbies": [
+        {&nbsp;"id":&nbsp;"h1", "title":&nbsp;"Sports" },
+        {&nbsp;"id":&nbsp;"h2", "title":&nbsp;"Cooking" }
+    ],
+    "isInstructor":&nbsp;true
+}</pre><p>JSON&nbsp;data supports <strong>objects</strong> (<code>{}</code>), <strong>arrays</strong> (<code>[]</code>), <strong>strings</strong> (MUST use double-quotes!), <strong>numbers</strong> (NO&nbsp;quotes) and <strong>booleans</strong> (also NO quotes).</p><p>All object keys (e.g. "name")&nbsp;<strong>HAVE&nbsp;to be wrapped by double quotes</strong>. <strong>No quotes</strong> or <strong>single quotes</strong> are <strong>NOT&nbsp;ALLOWED</strong>!</p><p>Actually, the whole JSON "object"&nbsp;is wrapped in quotes itself because<strong> JSON&nbsp;data in the end is just a string</strong> that contains data in the format shown above.</p><p>You can test it yourself - take the following non-JSON&nbsp;JavaScript object and apply <code>JSON.stringify()</code> on it. This will convert it to JSON&nbsp;data. If you do that in the dev tools console, you'll see that you in the end get a string which contains data formatted as shown above.</p><pre class="prettyprint linenums">const person =&nbsp;{ //&nbsp;this is NOT JSON - it's a normal ("raw")&nbsp;JavaScript object!
+    name:&nbsp;'Max',
+    age:&nbsp;30,
+    hobbies:&nbsp;[
+        { id:&nbsp;'h1', title:&nbsp;'Sports' },
+        { id:&nbsp;'h2', title:&nbsp;'Cooking' }
+    ],
+    isInstructor: true
+};
+
+const jsonData =&nbsp;JSON.stringify(person); //&nbsp;convert raw JS&nbsp;data to JSON data string
+console.log(jsonData);&nbsp;// a string with machine-readable JSON data in it
+console.log(typeof jsonData);&nbsp;// string</pre><p>We use JSON&nbsp;data because it's easy to parse for machines - and as an extra benefit it's also quite readable to us humans.</p><p>If you receive some JSON&nbsp;data and you want to convert it back into normal JS&nbsp;data, you can use <code>JSON.parse()</code>:</p><pre class="prettyprint linenums">const parsedData =&nbsp;JSON.parse(jsonData); // yields a "raw"&nbsp;JS object/&nbsp;array etc.</pre><p>Also nice to know:&nbsp;You're <strong>NOT&nbsp;LIMITED&nbsp;to objects</strong> when converting data to JSON. You can also convert numbers, arrays, booleans or just strings - all data types JSON&nbsp;supports:</p><pre class="prettyprint linenums">const jsonNumber =&nbsp;JSON.stringify(2); //&nbsp;"2"
+const jsonText =&nbsp;JSON.stringify('Hi there!&nbsp;I use single quotes in raw JS'); //&nbsp;""Hi there!&nbsp;...""
+const jsonArray =&nbsp;JSON.stringify([1, 2, 3]); // "[1,2,3]"
+const jsonBoolean =&nbsp;JSON.stringify(true); //&nbsp;"true"</pre>
