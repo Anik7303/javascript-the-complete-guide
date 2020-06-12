@@ -1,37 +1,14 @@
+// Using axios javascript library
+
 const fetchButton = document.querySelector('#available-posts button');
 const listElement = document.querySelector('#available-posts ul.posts');
 const postTemplate = document.getElementById('single-post');
 const form = document.querySelector('#new-post form');
 const addPostBtn = document.querySelector('#new-post button');
 
-const sendHttpRequest = (method, url, data) => {
-    return fetch(url, {
-        method: method,
-        body: data,
-    })
-        .then((response) => {
-            return {
-                data: response.json(),
-                status: response.status,
-            };
-        })
-        .then((data, status) => {
-            if (status >= 200 && status < 300) {
-                return data;
-            } else {
-                throw new Error(`Something went wrong - error: ${data}`);
-            }
-        })
-        .catch((error) => {
-            throw error;
-        });
-};
-
 function renderPosts(data) {
-    console.log(data);
     if (data) {
         const postsList = data;
-        // const postsList = JSON.parse(data);
         for (const post of postsList) {
             const postEl = document.importNode(postTemplate.content, true);
             postEl.querySelector('h2').textContent = post.title.toUpperCase();
@@ -44,11 +21,11 @@ function renderPosts(data) {
 
 async function fetchPostsHandler() {
     try {
-        const responseData = await sendHttpRequest(
-            'get',
-            'https://jsonplaceholder.typicode.com/postss'
+        const response = await axios.get(
+            'https://jsonplaceholder.typicode.com/posts'
         );
-        renderPosts(responseData);
+        console.log(response);
+        renderPosts(response.data);
     } catch (error) {
         console.log(error);
     }
@@ -61,12 +38,12 @@ const createPost = async (title, content) => {
     // post.append('body', content);
     post.append('id', userId);
     try {
-        const responseData = await sendHttpRequest(
-            'POST',
+        const response = await axios.post(
             'https://jsonplaceholder.typicode.com/posts',
             post
         );
-        const { id: postId } = responseData;
+        console.log(response);
+        const { id: postId } = response.data;
         // const { id: postId } = JSON.parse(responseData);
         console.log(postId);
     } catch (error) {
@@ -91,11 +68,10 @@ function createPostHandler(event) {
 async function deletePostHandler(event) {
     if (event.target.tagName === 'BUTTON') {
         const postId = event.target.closest('li').id;
-        const responseData = await sendHttpRequest(
-            'delete',
+        const response = await axios.delete(
             `https://jsonplaceholder.typicode.com/posts/${postId}`
         );
-        console.log(responseData);
+        console.log(response);
     }
 }
 
