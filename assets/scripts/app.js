@@ -1,18 +1,21 @@
 const fetchButton = document.querySelector('#available-posts button');
+
 const listElement = document.querySelector('#available-posts ul.posts');
 const postTemplate = document.getElementById('single-post');
 
-function sendHttpRequest(method, url, callback) {
-    const xhr = new XMLHttpRequest();
-    try {
-        xhr.open(method, url);
-        xhr.requestType = 'json';
-        xhr.onload = () => callback(xhr.response);
-        xhr.send();
-    } catch (error) {
-        throw error;
-    }
-}
+const sendHttpRequest = (method, url) => {
+    return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        try {
+            xhr.open(method, url);
+            // xhr.responseType = 'json';
+            xhr.onload = () => resolve(xhr.response);
+            xhr.send();
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
 
 function renderPosts(data) {
     if (data) {
@@ -27,15 +30,11 @@ function renderPosts(data) {
 }
 
 async function fetchPostsHandler() {
-    try {
-        sendHttpRequest(
-            'GET',
-            'https://jsonplaceholder.typicode.com/posts',
-            renderPosts
-        );
-    } catch (error) {
-        console.log(error);
-    }
+    sendHttpRequest('get', 'https://jsonplaceholder.typicode.com/posts')
+        .then((responseData) => {
+            renderPosts(responseData);
+        })
+        .catch((error) => console.log(error));
 }
 
 fetchButton.addEventListener('click', fetchPostsHandler);
