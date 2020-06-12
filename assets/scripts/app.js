@@ -1,6 +1,7 @@
 const fetchButton = document.querySelector('#available-posts button');
 const listElement = document.querySelector('#available-posts ul.posts');
 const postTemplate = document.getElementById('single-post');
+const form = document.querySelector('#new-post form');
 const addPostBtn = document.querySelector('#new-post button');
 
 const sendHttpRequest = (method, url, data) => {
@@ -68,4 +69,5 @@ function createPostHandler(event) {
 }
 
 fetchButton.addEventListener('click', fetchPostsHandler);
-addPostBtn.addEventListener('click', createPostHandler);
+form.addEventListener('submit', createPostHandler);
+// addPostBtn.addEventListener('click', createPostHandler);
