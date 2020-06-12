@@ -30,11 +30,15 @@ function renderPosts(data) {
 }
 
 async function fetchPostsHandler() {
-    sendHttpRequest('get', 'https://jsonplaceholder.typicode.com/posts')
-        .then((responseData) => {
-            renderPosts(responseData);
-        })
-        .catch((error) => console.log(error));
+    try {
+        const responseData = await sendHttpRequest(
+            'get',
+            'https://jsonplaceholder.typicode.com/posts'
+        );
+        renderPosts(responseData);
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 fetchButton.addEventListener('click', fetchPostsHandler);
