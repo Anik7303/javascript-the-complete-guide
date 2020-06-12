@@ -7,10 +7,7 @@ const addPostBtn = document.querySelector('#new-post button');
 const sendHttpRequest = (method, url, data) => {
     return fetch(url, {
         method: method,
-        body: JSON.stringify(data),
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        body: data,
     })
         .then((response) => {
             return {
@@ -59,11 +56,10 @@ async function fetchPostsHandler() {
 
 const createPost = async (title, content) => {
     const userId = Math.random().toString();
-    const post = {
-        title: title,
-        body: content,
-        userId: userId,
-    };
+    const post = new FormData(form);
+    // post.append('title', title);
+    // post.append('body', content);
+    post.append('id', userId);
     try {
         const responseData = await sendHttpRequest(
             'POST',
