@@ -5,33 +5,36 @@ const form = document.querySelector('#new-post form');
 const addPostBtn = document.querySelector('#new-post button');
 
 const sendHttpRequest = (method, url, data) => {
-    return new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open(method, url);
-        // xhr.responseType = 'json';
-        xhr.onload = () => {
-            if (xhr.status >= 200 && xhr.status < 300) {
-                resolve(xhr.response);
+    return fetch(url, {
+        method: method,
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((response) => {
+            return {
+                data: response.json(),
+                status: response.status,
+            };
+        })
+        .then((data, status) => {
+            if (status >= 200 && status < 300) {
+                return data;
             } else {
-                reject(
-                    new Error(
-                        `Something went wrong! (status code: ${xhr.status})`
-                    )
-                );
+                throw new Error(`Something went wrong - error: ${data}`);
             }
-        };
-        xhr.onerror = () => {
-            reject(
-                new Error(`Failed to send request (status code: ${xhr.status})`)
-            );
-        };
-        xhr.send(JSON.stringify(data));
-    });
+        })
+        .catch((error) => {
+            throw error;
+        });
 };
 
 function renderPosts(data) {
+    console.log(data);
     if (data) {
-        const postsList = JSON.parse(data);
+        const postsList = data;
+        // const postsList = JSON.parse(data);
         for (const post of postsList) {
             const postEl = document.importNode(postTemplate.content, true);
             postEl.querySelector('h2').textContent = post.title.toUpperCase();
@@ -46,7 +49,7 @@ async function fetchPostsHandler() {
     try {
         const responseData = await sendHttpRequest(
             'get',
-            'https://jsonplaceholder.typicode.com/posts'
+            'https://jsonplaceholder.typicode.com/postss'
         );
         renderPosts(responseData);
     } catch (error) {
@@ -67,7 +70,8 @@ const createPost = async (title, content) => {
             'https://jsonplaceholder.typicode.com/posts',
             post
         );
-        const { id: postId } = JSON.parse(responseData);
+        const { id: postId } = responseData;
+        // const { id: postId } = JSON.parse(responseData);
         console.log(postId);
     } catch (error) {
         console.log(error);
